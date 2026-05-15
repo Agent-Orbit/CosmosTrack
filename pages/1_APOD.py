@@ -14,7 +14,7 @@ def main():
         st.session_state.data_today = response_today.json()
     
     if "favorites" not in st.session_state:
-        st.session_state.favorites = []
+        st.session_state.favorites = api_helpers.load_favorites()
 
     data = st.session_state.data_today
     
@@ -27,6 +27,7 @@ def main():
         if st.button("Add to favourites", key="fav_today", use_container_width=True):
             if data not in st.session_state.favorites:
                 st.session_state.favorites.append(data)
+                api_helpers.save_favorites(st.session_state.favorites)
                 st.success("Added to favorites!")
             else:
                 st.info("Already in favorites")
@@ -34,6 +35,7 @@ def main():
     with col2:
         if st.button("Details", key="details_today", use_container_width=True):
             st.session_state.selected_apod = data
+            show_details(st.session_state.selected_apod)
     
     st.divider()
 
@@ -74,6 +76,7 @@ def main():
                 if st.button("Add to favourites", key=f"{item['date']}_fav_left", use_container_width=True):
                     if item not in st.session_state.favorites:
                         st.session_state.favorites.append(item)
+                        api_helpers.save_favorites(st.session_state.favorites)
                         st.success("Added!")
                     else:
                         st.info("Already in favorites")
@@ -81,6 +84,7 @@ def main():
             with col_r:
                 if st.button("Details", key=f"{item['date']}_details_left", use_container_width=True):
                     st.session_state.selected_apod = item
+                    show_details(st.session_state.selected_apod)
     
     with col2:
         for item in second_half_APODs:
@@ -92,6 +96,7 @@ def main():
                 if st.button("Add to favourites", key=f"{item['date']}_fav_right", use_container_width=True):
                     if item not in st.session_state.favorites:
                         st.session_state.favorites.append(item)
+                        api_helpers.save_favorites(st.session_state.favorites)
                         st.success("Added!")
                     else:
                         st.info("Already in favorites")
@@ -99,6 +104,7 @@ def main():
             with col_r:
                 if st.button("Details", key=f"{item['date']}_details_right", use_container_width=True):
                     st.session_state.selected_apod = item
+                    show_details(st.session_state.selected_apod)
 
     st.divider()
 
@@ -142,6 +148,7 @@ def main():
             if st.button("Add to favourites", key=f"{selectedAPOD['date']}_fav_selected", use_container_width=True):
                 if selectedAPOD not in st.session_state.favorites:
                     st.session_state.favorites.append(selectedAPOD)
+                    api_helpers.save_favorites(st.session_state.favorites)
                     st.success("Added to favorites!")
                 else:
                     st.info("Already in favorites")
@@ -149,8 +156,84 @@ def main():
         with col_r:
             if st.button("Details", key=f"{selectedAPOD['date']}_details_selected", use_container_width=True):
                 st.session_state.selected_apod = selectedAPOD
+                show_details(st.session_state.selected_apod)
 
     st.divider()
+
+    with st.sidebar:
+
+        st.markdown("# Favorites")
+
+        if "favorites" in st.session_state and len(st.session_state.favorites) > 0:
+
+            favorites = st.session_state.favorites
+
+            for n, fav in enumerate(favorites):
+
+                st.write(f"{n + 1}- {fav['title']}")
+
+                if fav["media_type"] == "image":
+
+                    st.image(fav["hdurl"])
+                
+                else:
+
+                    st.video(fav["hdurl"])
+                
+                col1, col2 = st.columns(2)
+
+                with col1:
+
+                    if st.button("Show Details", use_container_width=True, key=f"{fav['date']}_detailsShow"):
+
+                        show_details(fav)
+                
+                with col2:
+
+                    if st.button("Remove", use_container_width=True, key=f"{fav['date']}_remove"):
+
+                        st.session_state.favorites.pop(n)
+                        api_helpers.save_favorites(st.session_state.favorites)
+                        st.rerun()
+
+                st.divider()
+
+        else:
+
+            st.info("No favorites saved yet")
+
+@st.dialog("APOD Details",width="large",dismissible=True)
+def show_details(data):
+
+    response = requests.get(data["hdurl"])
+    contents = response.content
+
+    if data['media_type'] == "image":
+
+        st.image(data['hdurl'])
+        file_name = f"{data['title']}.png"
+        mime_type = "image/png"
+        
+    
+    else:
+
+        st.video(data['hdurl'])
+        file_name = f"{data['title']}.mp4"
+        mime_type = "video/mp4"
+    
+    st.markdown(f"# Title: {data['title']}")
+    st.markdown(f"## Date: {data['date']}")
+    st.markdown(f"## Copyright: {data['copyright']}")
+    st.markdown(f"## URL: {data['url']}")
+    st.markdown(f"### Explanation: {data['explanation']}")
+    st.download_button(
+        "Download APOD",
+        data=contents,
+        file_name=file_name,
+        mime=mime_type,
+        use_container_width=True
+    )
+
 
 def make_PicCard(data, title, APODtype):
     
