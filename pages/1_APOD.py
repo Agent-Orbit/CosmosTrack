@@ -125,7 +125,7 @@ def main():
         st.session_state.selectedAPOD = None
         st.session_state.last_date = None
 
-    if st.session_state.last_date != selected_date:
+    if st.button("Fetch APOD", key="fetch_selected_date"):
         API_KEY = api_helpers.get_api()
         url = f"https://api.nasa.gov/planetary/apod?api_key={API_KEY}&date={selected_date}"
         response = requests.get(url)
@@ -133,8 +133,11 @@ def main():
         if response.status_code == 200:
             st.session_state.selectedAPOD = response.json()
             st.session_state.last_date = selected_date
+            st.success("APOD fetched successfully!")
         else:
             st.error("Failed to fetch APOD")
+        
+        st.divider()
 
     if st.session_state.selectedAPOD:
         selectedAPOD = st.session_state.selectedAPOD
