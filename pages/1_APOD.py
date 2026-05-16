@@ -208,22 +208,31 @@ def show_details(data):
     response = requests.get(data["hdurl"])
     contents = response.content
 
-    if data['media_type'] == "image":
+    if data.get('hdurl') is not None:
 
-        st.image(data['hdurl'])
-        file_name = f"{data['title']}.png"
-        mime_type = "image/png"
+        if data['media_type'] == "image":
+
+            st.image(data['hdurl'])
+            file_name = f"{data['title']}.png"
+            mime_type = "image/png"
+            
         
+        else:
+
+            st.video(data['hdurl'])
+            file_name = f"{data['title']}.mp4"
+            mime_type = "video/mp4"
     
     else:
 
-        st.video(data['hdurl'])
-        file_name = f"{data['title']}.mp4"
-        mime_type = "video/mp4"
+        st.error("Error in fetching APOD")
     
     st.markdown(f"# Title: {data['title']}")
     st.markdown(f"## Date: {data['date']}")
-    st.markdown(f"## Copyright: {data['copyright']}")
+
+    if data.get('copyright') is not None:
+
+        st.markdown(f"## Copyright: {data['copyright']}")
     st.markdown(f"## URL: {data['url']}")
     st.markdown(f"### Explanation: {data['explanation']}")
     st.download_button(
