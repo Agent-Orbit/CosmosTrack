@@ -9,6 +9,12 @@ def get_api():
     NASA_API_KEY = os.getenv("NASA_API_KEY")
     return NASA_API_KEY
 
+def get_groq_api():
+
+    load_dotenv()
+    GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+    return GROQ_API_KEY
+
 FAVORITES_FILE = "database/favorites.json"
 
 def load_favorites():

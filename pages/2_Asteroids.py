@@ -6,6 +6,7 @@ import plotly.graph_objects as go
 import math
 import random
 import pandas as pd
+from groq import Groq
 
 def main():
 
@@ -21,6 +22,8 @@ def main():
 
         url = f"https://api.nasa.gov/neo/rest/v1/feed?start_date={today}&end_date={week_later}&api_key={API_KEY}"
 
+        st.session_state.dateRange = f"{today} - {week_later}"
+
         response = requests.get(url)
 
         if response.status_code == 200:
@@ -33,6 +36,7 @@ def main():
             st.stop()
 
     NeoWsData = st.session_state.Data_NeoWs
+    dateRange = st.session_state.dateRange
 
     fig = go.Figure()
 
@@ -57,6 +61,7 @@ def main():
     approach_date = []
     neo_id = []
     url_list = []
+    velocity_list = []
 
     for key, asteroid_list in NeoWsData["near_earth_objects"].items():
 
@@ -115,6 +120,10 @@ def main():
             approach_date.append(date)
             neo_id.append(asteroid["neo_reference_id"])
             url_list.append(asteroid["nasa_jpl_url"])
+            
+
+            velocity_kmh = asteroid["close_approach_data"][0]["relative_velocity"]["kilometers_per_hour"]
+            velocity_list.append(velocity_kmh)
 
     df = pd.DataFrame({
         "neo_id": neo_id,
@@ -123,7 +132,8 @@ def main():
         "url": url_list,
         "magnitude": magnitude,
         "miss_distance_km": miss_distance,
-        "is_hazardous": hazardous_asteroids
+        "is_hazardous": hazardous_asteroids,
+        "velocity_kmh": velocity_list
     })
 
     fig.update_layout(
@@ -170,13 +180,13 @@ def main():
 
     st.markdown("# Asteroids Plot:")
 
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
     st.divider()
 
     st.markdown("# Data:")
 
-    st.dataframe(df, use_container_width=True)
+    st.dataframe(df, width="stretch")
 
     csv = df.to_csv(index=False).encode("utf-8")
 
@@ -186,6 +196,94 @@ def main():
         file_name="NASA_Asteroids.csv",
         mime="text/csv"
     )
+    st.divider()
+
+    # AI Integration
+
+    metaData = {"Total Asteroids": int(NeoWsData['element_count']),
+                "Date Range": dateRange
+                }
+    
+    astData = {"name": name,
+               "approach date": approach_date,
+               "hazardous": hazardous_asteroids,
+               "magnitude": magnitude,
+               "miss_distance": miss_distance,
+               "velocity_kmh": velocity_list}
+    
+    prompt = f"""You are a senior analyst at NASA's Planetary Defense Coordination Office.
+
+        You have been handed the following asteroid close-approach dataset for analysis.
+        The data is pre-filtered and contains only essential fields.
+
+        Asteroid Data:
+        {astData}
+
+        Meta Data:
+        {metaData}
+
+        Write a professional but engaging NASA-style briefing report using EXACTLY this format:
+
+        ## 🌍 ASTEROID BRIEFING REPORT
+
+        ### 1. OVERVIEW
+        [Total asteroids tracked, date range, how many are potentially hazardous]
+
+        ### 2. CLOSEST APPROACH
+        [Asteroid name, miss distance in km, compare to Earth-Moon distance (384,400 km)]
+
+        ### 3. FASTEST OBJECT
+        [Name, speed in km/h, compare to something relatable like a bullet or jet]
+
+        ### 4. LARGEST OBJECT
+        [Name, diameter in km, compare to something familiar like a stadium or city]
+
+        ### 5. ⚠️ HAZARD SUMMARY
+        [List each potentially hazardous asteroid on its own line with a bullet point]
+        [Explain in plain English what hazardous means and give honest risk assessment]
+
+        ### 6. 💡 ANALYST'S NOTE
+        [One surprising or interesting insight from the data]
+
+        ---
+        *Prepared by NASA Planetary Defense Coordination Office*
+
+        Rules:
+        - Never mention JSON, data formats, or that you are an AI
+        - Speak as if you personally tracked and analyzed these asteroids
+        - Follow the format above exactly — do not add or remove sections
+        - Keep total response under 450 words
+        - Use bullet points inside sections where listing multiple items
+        - Every section must have actual content — never say data is unavailable"""
+    
+    GROQ_API_KEY = api_helpers.get_groq_api()
+    
+    client = Groq(api_key=GROQ_API_KEY)
+
+    response = client.chat.completions.create(
+    model="llama-3.3-70b-versatile",
+    messages=[{"role": "user", "content": prompt}],
+    )
+
+    st.title("Chat with Asteroids")
+    st.write("")
+
+    result = response.choices[0].message.content
+    
+
+    with st.chat_message(avatar="assistant",name="user"):
+        st.markdown(result)
+    
+    st.divider()
+
+    if "chat_history" not in st.session_state:
+        st.session_state.chat_history = []
+    
+    
+
+
+
+
 
 if __name__ == "__main__":
 
