@@ -259,6 +259,7 @@ Rules:
         response = client.chat.completions.create(
             model="llama-3.3-70b-versatile",
             messages=[{"role": "user", "content": report_prompt}],
+            max_tokens = 600
         )
 
         st.session_state.Ast_Report = response.choices[0].message.content
@@ -270,7 +271,7 @@ Rules:
     st.markdown("## 🤖 AI Analyst Report")
 
     with st.chat_message("assistant"):
-        
+
         st.markdown(st.session_state.Ast_Report)
 
     st.divider()
