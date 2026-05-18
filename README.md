@@ -2,6 +2,9 @@
 
 An interactive NASA data explorer built with Streamlit.
 
+[![Status](https://img.shields.io/badge/status-live-brightgreen)](https://cosmostrack.streamlit.app)
+🌐 **Live at:** [cosmostrack.streamlit.app](https://cosmostrack.streamlit.app)
+
 ---
 
 ## 📸 Page 1 — APOD Viewer
@@ -42,14 +45,12 @@ Get your keys:
 
 ## 📦 Requirements
 
-```
 streamlit
 requests
 plotly
 pandas
 pillow
 python-dotenv
-```
 
 ---
 
