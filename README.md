@@ -25,7 +25,7 @@ An interactive NASA data explorer built with Streamlit.
 ## ⚙️ Setup
 
 ```bash
-git clone https://github.com/yourusername/CosmosTrack.git
+git clone https://github.com/AliAkbar4025/CosmosTrack.git
 cd cosmostrack
 pip install -r requirements.txt
 streamlit run app.py
