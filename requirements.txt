@@ -4,3 +4,4 @@ plotly
 pandas
 pillow
 python-dotenv
+groq
