@@ -23,8 +23,6 @@ The application integrates NASA APIs, data visualization, and large language mod
 * Save favourite discoveries
 * Persistent favourites storage
 
-### Screenshot
-
 ---
 
 ## ☄️ Asteroid Tracker
@@ -35,8 +33,6 @@ The application integrates NASA APIs, data visualization, and large language mod
 * Closest approach analysis
 * Largest asteroid tracking
 * Interactive visualizations
-
-### Screenshot
 
 ---
 
@@ -52,8 +48,6 @@ Capabilities:
 * Follow-up conversational chat
 
 Powered by Groq + LLaMA 3.3 70B.
-
-### Screenshot
 
 ---
 
@@ -132,13 +126,40 @@ GROQ_API_KEY = "your_groq_api_key"
 
 ---
 
-# Screenshots
+# 📸 Screenshots
+
+## Main Dashboard
 
 <p align="center">
   <img src="docs/images/main_page.png" width="100%">
 </p>
 
----
+<br>
+
+## 🌌 APOD Explorer
+
+<p align="center">
+  <img src="docs/images/daily_apod.png" width="48%">
+  <img src="docs/images/apod_detail.png" width="48%">
+</p>
+
+<br>
+
+## ☄️ Asteroid Tracker
+
+<p align="center">
+  <img src="docs/images/asteroid_main.png" width="48%">
+  <img src="docs/images/asteroid_data.png" width="48%">
+</p>
+
+<br>
+
+## 🤖 AI Space Analyst
+
+<p align="center">
+  <img src="docs/images/ast_report.png" width="48%">
+  <img src="docs/images/ast_chat.png" width="48%">
+</p>
 
 ---
 
