@@ -25,7 +25,7 @@ The application integrates NASA APIs, data visualization, and large language mod
 
 ### Screenshot
 
-![APOD Dashboard](docs/images/apod-dashboard.png)
+![APOD Dashboard](docs/images/main_page.png)
 
 ---
 
