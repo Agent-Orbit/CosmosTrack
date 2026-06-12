@@ -1,61 +1,149 @@
 # 🚀 CosmosTrack
 
-An interactive NASA data explorer built with Streamlit.
+An AI-powered NASA exploration platform built with Streamlit that combines real-time space data, asteroid monitoring, interactive visualizations, and AI-assisted analysis.
 
-[![Status](https://img.shields.io/badge/status-live-brightgreen)](https://cosmostrack.streamlit.app)
-🌐 **Live at:** [cosmostrack.streamlit.app](https://cosmostrack.streamlit.app)
-
----
-
-## 📸 Page 1 — APOD Viewer
-- View today's Astronomy Picture of the Day
-- Look up APOD for any date
-- Save favourites
-- Favourites are stored locally and shared across sessions on the cloud version.
-
-## ☄️ Page 2 — Asteroid Tracker
-- Live near-Earth asteroid data from NASA NeoWs API
-- 2D orbital proximity plot
-- Stats: total count, hazardous count, closest approach, largest object
-- Full data table with CSV download
-- AI-generated analyst report + follow-up chat (Groq LLaMA 3.3 70B)
+🌐 Live Demo: https://cosmostrack.streamlit.app
 
 ---
 
-## ⚙️ Setup
+# Overview
+
+CosmosTrack brings NASA's public datasets into an interactive dashboard where users can explore astronomy content, monitor near-Earth asteroids, and generate AI-powered insights from live space data.
+
+The application integrates NASA APIs, data visualization, and large language models to provide an engaging space exploration experience.
+
+---
+
+# Features
+
+## 🌌 Astronomy Picture of the Day (APOD)
+
+* View NASA's Astronomy Picture of the Day
+* Explore historical APOD entries by date
+* Save favourite discoveries
+* Persistent favourites storage
+
+### Screenshot
+
+---
+
+## ☄️ Asteroid Tracker
+
+* Live Near-Earth Object monitoring
+* Data powered by NASA NeoWs API
+* Hazardous asteroid detection
+* Closest approach analysis
+* Largest asteroid tracking
+* Interactive visualizations
+
+### Screenshot
+
+---
+
+## 🤖 AI Space Analyst
+
+Generate automated asteroid reports using LLMs.
+
+Capabilities:
+
+* Risk summaries
+* Data interpretation
+* Space object analysis
+* Follow-up conversational chat
+
+Powered by Groq + LLaMA 3.3 70B.
+
+### Screenshot
+
+---
+
+# Architecture
+
+```text
+NASA APIs
+     │
+     ▼
+Data Collection
+     │
+     ▼
+Data Processing
+     │
+     ├── APOD Module
+     │
+     ├── Asteroid Analytics
+     │
+     └── AI Space Analyst
+             │
+             ▼
+      Groq LLM Integration
+             │
+             ▼
+      Streamlit Dashboard
+```
+
+---
+
+# Technology Stack
+
+### Backend
+
+* Python
+* Requests
+* Pandas
+
+### Frontend
+
+* Streamlit
+* Plotly
+
+### AI
+
+* Groq API
+* LLaMA 3.3 70B
+
+### Data Sources
+
+* NASA APOD API
+* NASA NeoWs API
+
+---
+
+# Local Installation
 
 ```bash
 git clone https://github.com/AliAkbar4025/CosmosTrack.git
-cd cosmostrack
+cd CosmosTrack
+
 pip install -r requirements.txt
+
 streamlit run app.py
 ```
 
-Create `.streamlit/secrets.toml`:
+Create:
+
+```toml
+.streamlit/secrets.toml
+```
+
 ```toml
 NASA_API_KEY = "your_nasa_api_key"
 GROQ_API_KEY = "your_groq_api_key"
 ```
 
-Get your keys:
-- NASA → https://api.nasa.gov
-- Groq → https://console.groq.com
+---
+
+# Screenshots
+
+<p align="center">
+  <img src="docs/images/main_page.png" width="100%">
+</p>
 
 ---
 
-## 📦 Requirements
-
-```bash
-streamlit
-requests
-plotly
-pandas
-pillow
-python-dotenv
-```
-
 ---
 
-## 🙋 Author
+# Author
 
-Built by Ali — ML Developer & Streamlit enthusiast.
+Ali Akbar
+
+AI Developer focused on AI Applications, RAG Systems, Agentic Workflows, and Intelligent Software built with Python.
