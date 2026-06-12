@@ -25,8 +25,6 @@ The application integrates NASA APIs, data visualization, and large language mod
 
 ### Screenshot
 
-![APOD Dashboard](docs/images/main_page.png)
-
 ---
 
 ## ☄️ Asteroid Tracker
@@ -39,8 +37,6 @@ The application integrates NASA APIs, data visualization, and large language mod
 * Interactive visualizations
 
 ### Screenshot
-
-![Asteroid Tracker](docs/images/asteroid-dashboard.png)
 
 ---
 
@@ -58,8 +54,6 @@ Capabilities:
 Powered by Groq + LLaMA 3.3 70B.
 
 ### Screenshot
-
-![AI Analysis](docs/images/ai-analysis.png)
 
 ---
 
@@ -140,12 +134,11 @@ GROQ_API_KEY = "your_groq_api_key"
 
 # Screenshots
 
-Add the following images:
+<p align="center">
+  <img src="docs/images/main_page.png" width="100%">
+</p>
 
-* docs/images/homepage.png
-* docs/images/apod-dashboard.png
-* docs/images/asteroid-dashboard.png
-* docs/images/ai-analysis.png
+---
 
 ---
 
