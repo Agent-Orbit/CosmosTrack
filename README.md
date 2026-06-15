@@ -114,7 +114,7 @@ Data Processing
 # Local Installation
 
 ```bash
-git clone https://github.com/AliAkbar4025/CosmosTrack.git
+git clone (https://github.com/Agent-Orbit/CosmosTrack.git
 cd CosmosTrack
 
 pip install -r requirements.txt
