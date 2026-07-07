@@ -114,7 +114,7 @@ Data Processing
 # Local Installation
 
 ```bash
-git clone (https://github.com/Agent-Orbit/CosmosTrack.git
+git clone (https://github.com/Agent-Orbit/CosmosTrack.git)
 cd CosmosTrack
 
 pip install -r requirements.txt
@@ -172,7 +172,11 @@ GROQ_API_KEY = "your_groq_api_key"
 
 ---
 
-# Author
+## Author
 
-**Agent Orbit team**
+**Ali Akbar**
+Self-taught ML/AI Developer — building AI-powered tools and autonomous agent systems.
+
+- LinkedIn: [linkedin.com/in/ali-akbar-3148b940b](https://www.linkedin.com/in/ali-akbar-3148b940b/)
+- GitHub: [@Agent-Orbit](https://github.com/Agent-Orbit)
 
